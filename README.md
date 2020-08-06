@@ -8,17 +8,17 @@ Inspired by [rthompsonj/SotAPublicStatsQuery][2].
 ## Requirements
 
 - go ^= v1.14
-- go-elasticsearch ^= v7.5
+- go-elasticsearch ^= v7.8
 
 ## Installation
 
 Add Gosta to your `go.mod` file by adding this line:
 
 ```
-require github.com/wisn/gosta/v1 v1.x
+require github.com/wisn/gosta
 ```
 
-Or simply run `go get github.com/wisn/gosta/v1` command.
+Or simply run `go get github.com/wisn/gosta` command.
 
 Don't forget to run `go mod tidy` and `go mod verify`.
 
@@ -44,21 +44,21 @@ package main
 import (
 	"log"
 
-	"github.com/wisn/gosta/v1"
+	"github.com/wisn/gosta"
 )
 
 func main() {
-  cfg := Config{
+	cfg := gosta.Config{
 		Host: "http://shroudoftheavatar.com",
 		Port: 9200,
 	}
 
-	gst, err := New(cfg)
+	gst, err := gosta.New(cfg)
 	if err != nil {
-		t.Error(err)
+		log.Fatal(err)
 	}
 
-  qry := map[string]interface{}{
+	qry := map[string]interface{}{
 		"size": 2,
 		"sort": []map[string]interface{}{
 			map[string]interface{}{
@@ -113,18 +113,18 @@ package main
 import (
 	"log"
 
-	"github.com/wisn/gosta/v1"
+	"github.com/wisn/gosta"
 )
 
 func main() {
-	cfg := Config{
+	cfg := gosta.Config{
 		Host: "http://shroudoftheavatar.com",
 		Port: 9200,
 	}
 
-	gst, err := New(cfg)
+	gst, err := gosta.New(cfg)
 	if err != nil {
-		t.Error(err)
+		log.Fatal(err)
 	}
 
 	qry := `
@@ -161,7 +161,7 @@ func main() {
 	// print as map[string]interface{} type
 	log.Println(res)
 
-  // print as a JSON in the string form
+	// print as a JSON in the string form
 	json, err := gst.JSON(res)
 	if err != nil {
 		log.Fatal(err)
